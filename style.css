@@ -10,6 +10,33 @@ body {
 	font-size: 15px;
 	font-family: "Spartan", sans-serif;
 	background-color: hsl(180, 52%, 96%);
+	position: relative;
+}
+
+.alert {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+	display: none;
+	justify-content: center;
+	/* transition: all 0.4s ease-in-out; */
+	/* transition? */
+}
+
+.alert p {
+	margin-top: 5vh;
+	font-size: 0.8rem;
+	padding: 2em 3em;
+	border-radius: 0.5em;
+	color: hsl(0, 0%, 100%);
+	box-shadow: 0 5px 20px -8px hsl(180, 29%, 50%);
+	background-color: hsl(180, 29%, 50%);
+}
+
+.alert.visible {
+	display: flex;
 }
 
 .pattern {
@@ -22,6 +49,7 @@ body {
 .container {
 	width: 90%;
 	max-width: 1000px;
+	min-height: 75vh;
 	margin: 0 auto;
 	position: relative;
 	border: 1px solid red;
@@ -64,6 +92,7 @@ body {
 	border: none;
 	outline: none;
 	padding: 0.25em 0.5em;
+	transition: all 0.4s ease-out;
 }
 
 .delete-filter:hover {
@@ -190,6 +219,7 @@ body {
 	font-size: 0.8rem;
 	font-weight: 700;
 	border-radius: 0.25em;
+	transition: all 0.4s ease-out;
 }
 
 .tag:last-child {
@@ -199,6 +229,7 @@ body {
 .requirements .tag:hover {
 	color: hsl(180, 52%, 96%);
 	background-color: hsl(180, 29%, 50%);
+
 	cursor: pointer;
 }
 
@@ -235,7 +266,11 @@ body {
 .attribution {
 	font-size: 11px;
 	text-align: center;
+	padding: 1em 0;
+	height: 5vh;
+	color: hsl(180, 29%, 50%);
 }
+
 .attribution a {
-	color: hsl(228, 45%, 44%);
+	color: hsl(180, 63%, 26%);
 }

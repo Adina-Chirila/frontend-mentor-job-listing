@@ -2,6 +2,8 @@ const container = document.querySelector(".container");
 const filterContainer = document.querySelector(".filter-container");
 const clearFiltersBtn = document.querySelector(".clear-btn");
 const jobList = document.querySelector(".jobs");
+const alert = document.querySelector(".alert");
+
 let filters = [];
 
 const renderFiltersContainer = (filterText) => {
@@ -10,7 +12,6 @@ const renderFiltersContainer = (filterText) => {
 };
 
 const addFilter = (filterText) => {
-	//!TO DO add a container that contains all selected filters
 	const filter = document.createElement("div");
 	filter.classList.add("tag", "filter-tag");
 
@@ -22,13 +23,16 @@ const addFilter = (filterText) => {
 	const filterToBeAdded = textSpan.dataset.id;
 
 	if (filters.includes(filterToBeAdded)) {
-		//!TO DO - add a modal
-		alert("filter already added");
+		alert.classList.add("visible");
+
+		setTimeout(() => {
+			alert.classList.remove("visible");
+		}, 1000);
+
 		return;
 	} else {
 		filters.push(filterToBeAdded);
 	}
-	// filters.push(textSpan.dataset.id);
 
 	const deleteFilter = document.createElement("button");
 	deleteFilter.className = "delete-filter";
@@ -43,10 +47,11 @@ const addFilter = (filterText) => {
 		const removedFilterIndex = filters.indexOf(removedFilter);
 
 		filters.splice(removedFilterIndex, 1);
-		//if is no filter left hide filter container
+
 		if (filters.length === 0) {
 			filterContainer.classList.remove("visible");
 		}
+		reRenderJobList();
 	});
 
 	filterContainer.append(filter);
@@ -56,35 +61,35 @@ const addFilter = (filterText) => {
 		filter.remove();
 		filters = [];
 		filterContainer.classList.remove("visible");
+		reRenderJobList();
 	});
 };
 
 const filteredData = (data) => {
-	return data.map((job) => {
+	return data.filter((job) => {
 		const allPossibleFilters = [
 			job.role,
 			job.level,
 			...job.languages,
 			...job.tools,
 		];
-		// console.log(allPossibleFilters);
-		//if there are filters show only the lists that match
+
+		const allPossibleFiltersLowerCase = allPossibleFilters.map((filter) =>
+			filter.toLowerCase()
+		);
+
 		if (filters.length === 0) {
-			// show all lists
-			console.log("all items");
-
 			return job;
-		} else if (filters.every((filter) => allPossibleFilters.includes(filter))) {
-			console.log("filtered items");
-
+		} else if (
+			filters.every((filter) => allPossibleFiltersLowerCase.includes(filter))
+		) {
 			return job;
 		}
 	});
 };
 
 const renderJobsList = (jobs) => {
-	// const filteredJobs = filteredData(externalData);
-	// console.log(filteredJobs);
+	jobList.innerHTML = "";
 	jobs.map((job) => {
 		const box = document.createElement("div");
 		box.className = "box";
@@ -150,43 +155,25 @@ const renderJobReq = (job) => {
 		tag.innerText = item;
 		tag.className = "tag";
 
-		// const keyName =
-		// tag.setAttribute(`data-${Object.keys(item)}-id`, item.toLowerCase());
 		tag.setAttribute(`data-id`, item.toLowerCase());
 
 		tag.addEventListener("click", () => {
 			const text = tag.innerText;
 
 			renderFiltersContainer(text);
-			// re-render lists?
-		});
 
+			reRenderJobList();
+		});
 		requirements.append(tag);
 	});
-
 	return requirements;
 };
 
-// const filteredData = (data) => {
-// 	return data.map((job) => {
-// 		const allPossibleFilters = [
-// 			job.role,
-// 			job.level,
-// 			...job.languages,
-// 			...job.tools,
-// 		];
-// 		// console.log(allPossibleFilters);
-// 		if (filters.length === 0) {
-// 			// console.log(`${filters} filters are empty`);
-// 			console.log(job);
-// 			console.log("length = 0 ");
-// 			return job;
-// 		} else if (filters.every((el) => allPossibleFilters.indexOf(el) != -1)) {
-// 			console.log(job);
-// 			console.log("with filters");
-// 			return job;
-// 		}
-// 	});
-// };
+const reRenderJobList = () => {
+	const filteredJobs = filteredData(externalData);
+	renderJobsList(filteredJobs);
+};
 
-renderJobsList(externalData);
+window.addEventListener("DOMContentLoaded", () => {
+	renderJobsList(externalData);
+});

@@ -21,14 +21,12 @@ body {
 	z-index: 1;
 	display: none;
 	justify-content: center;
-	/* transition: all 0.4s ease-in-out; */
-	/* transition? */
 }
 
 .alert p {
 	margin-top: 5vh;
 	font-size: 0.8rem;
-	padding: 2em 3em;
+	padding: 3em 4em;
 	border-radius: 0.5em;
 	color: hsl(0, 0%, 100%);
 	box-shadow: 0 5px 20px -8px hsl(180, 29%, 50%);
@@ -42,6 +40,7 @@ body {
 .pattern {
 	width: 100%;
 	height: 20vh;
+	max-height: 128px;
 	background: url("./images/bg-header-desktop.svg");
 	background-color: hsl(180, 29%, 50%);
 }
@@ -51,27 +50,30 @@ body {
 	max-width: 1000px;
 	min-height: 75vh;
 	margin: 0 auto;
+}
+
+header {
 	position: relative;
-	border: 1px solid red;
 }
 
 .filter-container {
 	position: absolute;
+	bottom: -50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 	background-color: hsl(0, 0%, 100%);
 	box-shadow: 0 5px 20px -8px hsl(180, 29%, 50%);
 	padding: 1.5em;
 	width: 100%;
-	top: -2.1em;
-	left: 0;
 	border-radius: 0.5em;
 	display: none;
-	/* display: flex; */
-	/* justify-content: space-between; */
-	align-items: center;
+	width: 75%;
+	margin: 0 auto;
 }
 
 .filter-container.visible {
 	display: flex;
+	align-items: center;
 }
 
 .filter-tag.tag {
@@ -90,9 +92,13 @@ body {
 .delete-filter {
 	background-color: hsl(180, 29%, 50%);
 	border: none;
-	outline: none;
+
 	padding: 0.25em 0.5em;
 	transition: all 0.4s ease-out;
+}
+
+.delete-filter:focus {
+	outline: none;
 }
 
 .delete-filter:hover {
@@ -107,14 +113,13 @@ body {
 
 .clear-btn {
 	border: none;
-	outline: none;
 	cursor: pointer;
 	font-family: inherit;
 	color: hsl(180, 29%, 50%);
 	font-weight: 700;
 	background-color: inherit;
-	position: relative;
 	margin-left: auto;
+	position: relative;
 }
 
 .clear-btn::after {
@@ -131,6 +136,10 @@ body {
 
 .clear-btn:hover::after {
 	transform: scale(1, 1);
+}
+
+.clear-btn:focus {
+	outline: none;
 }
 
 .jobs {
@@ -165,7 +174,6 @@ body {
 .job-details,
 .requirements {
 	display: flex;
-	/* border: 1px solid red; */
 	justify-content: space-between;
 }
 
@@ -229,7 +237,6 @@ body {
 .requirements .tag:hover {
 	color: hsl(180, 52%, 96%);
 	background-color: hsl(180, 29%, 50%);
-
 	cursor: pointer;
 }
 
@@ -273,4 +280,80 @@ body {
 
 .attribution a {
 	color: hsl(180, 63%, 26%);
+}
+
+@media only screen and (max-width: 1010px) {
+	.filter-container {
+		width: 90%;
+	}
+
+	.box {
+		flex-direction: column;
+	}
+
+	.requirements {
+		border-top: 1px solid hsl(180, 6%, 79%);
+		margin-top: 1em;
+		padding-top: 1em;
+	}
+
+	.job-name {
+		margin: 0.8em 0;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.requirements {
+		flex-wrap: wrap;
+		justify-content: flex-start;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	body {
+		font-size: 13px;
+	}
+
+	.jobs {
+		margin-top: 7em;
+	}
+
+	.box {
+		align-items: flex-start;
+		position: relative;
+		padding-top: 3em;
+		margin-bottom: 3em;
+	}
+
+	.logo-container {
+		position: absolute;
+		top: -25px;
+		width: 50px;
+	}
+
+	.logo-container img {
+		max-width: 100%;
+	}
+
+	.company-name {
+		margin-top: 0.3em;
+	}
+
+	.job-info {
+		margin-left: 0;
+	}
+
+	.tag {
+		margin-bottom: 1em;
+	}
+
+	.filter-container {
+		flex-wrap: wrap;
+		align-items: center;
+		bottom: -75%;
+	}
+
+	.alert p {
+		padding: 2em;
+	}
 }

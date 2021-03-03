@@ -115,6 +115,7 @@ const renderJobDetails = (job) => {
 	const logo = document.createElement("img");
 
 	logo.setAttribute("src", `${job.logo}`);
+	logo.setAttribute("alt", `${job.company} logo`);
 
 	const jobInfo = document.createElement("div");
 	jobInfo.className = "job-info";
